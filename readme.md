@@ -13,9 +13,6 @@ This article walks you through the key updates and how they can improve your wor
 [Tailwind CSS v4](https://tailwindcss.com) is a major update focused on performance, flexibility, and modern web standards. It features a reworked configuration system, improved customization, and faster builds—making it easier to tailor your design system at scale.
 For the latest features and release notes, visit the [Tailwind CSS blog](https://tailwindcss.com/blog).
 
-## Panel Configuration
-[...]
-
 ## Authentication
 
 ### [Multi-factor authentication](../docs/4.x/users/multi-factor-authentication)
@@ -25,6 +22,13 @@ For the latest features and release notes, visit the [Tailwind CSS blog](https:/
 Filament supports two built-in MFA methods:
 - [App authentication](../docs/4.x/users/multi-factor-authentication#app-authentication) using a TOTP app like Google Authenticator, Authy, or Microsoft Authenticator apps.
 - [Email authentication](../docs/4.x/users/multi-factor-authentication#email-authentication) which sends a one-time code to the user’s email.
+
+## Use Heroicons in Filament
+
+Filament includes the [Heroicons](https://heroicons.com/) icon set by default, so you can use icons without installing anything extra.
+The [Heroicon enum class](../docs/4.x/styling/icons#using-heroicons-in-filament) provides IDE autocompletion to help you quickly find the icon you need.
+
+Each icon is available in solid and outlined variants (`Heroicon::Star` vs. `Heroicon::OutlinedStar`). Filament automatically selects the appropriate size (`16px`, `20px`, or `24px`) based on context.
 
 ## Resources
 
@@ -194,6 +198,25 @@ In this JavaScript context, you can use `$state`, `$get()`, and `$set()` to inte
 [Error Notifications](../docs/4.x/panel-configuration#configuring-error-notifications)
 
 [...]
+
+## Panel Configuration
+
+### Sub-navigation position
+
+By default, sub-navigation appears at the start of each page. You can override this globally for the entire panel using the [`subNavigationPosition()` method](..//docs/4.x/panel-configuration#setting-the-default-sub-navigation-position).
+
+Available options are:
+- `Start` – default position
+- `End` – renders at the bottom
+- `Top` – displays as tabs
+
+### Strict Authorization Mode
+
+By default, Filament allows access to a resource if no policy or policy method exists — assuming authorization isn't required.
+
+To enforce stricter security, you can enable strict authorization mode using [`strictAuthorization()`](../docs/4.x/panel-configuration#strict-authorization-mode).
+This will throw an exception if a policy or method is missing, ensuring all access is explicitly defined.
+
 
 ## Conclusion
 
