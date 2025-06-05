@@ -51,6 +51,33 @@ To keep your Filament code clean and maintainable:
 - Create [dedicated component classes](../docs/4.x/resources/code-quality-tips#using-component-classes) when individual form inputs, table columns, filters, or actions become complex. This keeps each piece of logic focused and reusable.
 - Organize components by `type` and `purpose`, such as putting form inputs under `Schemas/Components` and table actions under `Actions`.
 
+### Customizing page content
+
+Each page in Filament now has its own [schema](../docs/4.x/schemas/overview), which defines its structure and content.
+
+You can override the default page schema using the `content()` method to fully control the layout.  
+This lets you add, remove, or reorder [schema components](../docs/4.x/schemas/overview) such as tables, tabs, and custom elements.
+
+### Resource create page redirect
+
+You can now configure the default redirect behavior after creating a resource.  
+By using the [panel configuration](../docs/4.x/panel-configuration), you can choose whether users are redirected to the index page, the view page, or the edit page after creating a record.
+
+This applies globally to all resources within the panel.
+
+### Disabling search term splitting
+
+The new `$shouldSplitGlobalSearchTerms` property allows you to disable splitting the global search term into individual words, improving search performance on large datasets.
+
+### Relation Manager
+
+#### Customizing the content tab
+
+The Edit and View pages now support full customization of the main content tab.  
+By overriding the `getContentTabComponent()` method, you can use any [tab customization](../docs/4.x/resources/managing-relationships#customizing-relation-manager-tabs) options, including changing the label, icon, or even adding custom behaviors.
+
+Previously, only the icon could be customized. Now, the entire tab component is fully configurable.
+
 ## Navigation
 
 ### [Sidebar / Topbar](../docs/4.x/navigation/overview#reloading-the-sidebar-and-topbar)
@@ -181,15 +208,34 @@ In this JavaScript context, you can use `$state`, `$get()`, and `$set()` to inte
 
 ### Static data
 
-[...]
+### Reordable Columns
+
+### Toolbar actions
+
+Tables now support a dedicated **toolbar actions** area.
+
+You can place both regular actions and [bulk actions](../docs/4.x/tables/actions#bulk-actions) in the [`toolbarActions()`](../docs/4.x/tables/actions#toolbar-actions) method.
+
+This is useful for actions like "create", which are not tied to a specific row, or for making bulk actions more visible and accessible in the table’s toolbar.
+
 
 ## Actions
 
-[...]
+### Unified actions
+
+Actions are now fully unified across tables, forms, infolists and regular actions.
+
+Instead of having separate `Action` classes for each context, all actions now use a single `Filament\Actions` namespace.
+
+### Improving bulk action performance
+
+Bulk actions now support the `chunkSelectedRecords()` method, allowing selected records to be processed in smaller batches instead of loading everything into memory at once — improving performance and reducing memory usage with large datasets.
 
 ## Widgets
 
-[...]
+### Making the chart collapsible
+
+Charts can now be made collapsible by setting the `$isCollapsible` property to `true` on the widget class.
 
 ## Notifications
 
@@ -217,6 +263,11 @@ By default, Filament allows access to a resource if no policy or policy method e
 To enforce stricter security, you can enable strict authorization mode using [`strictAuthorization()`](../docs/4.x/panel-configuration#strict-authorization-mode).
 This will throw an exception if a policy or method is missing, ensuring all access is explicitly defined.
 
+## Extras
+
+### Setting a default timezone with FilamentTimezone
+
+The new `FilamentTimezone` facade lets you set a default timezone for Filament globally via the `FilamentTimezone::set()` method, simplifying timezone management across components.
 
 ## Conclusion
 
