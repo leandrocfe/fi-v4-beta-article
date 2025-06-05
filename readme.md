@@ -6,7 +6,7 @@ This article walks you through the key updates and how they can improve your wor
 
 > You are currently viewing the features for Filament `4.x`, which is currently in `beta` and is not `stable`. Please report any issues you encounter on [GitHub]().
 
-> Looking for the current stable version? Visit the [3.x documentation]().
+> Looking for the current stable version? Visit the [3.x documentation](../docs/3.x).
 
 ## Filament v4 now uses Tailwind CSS v4
 
@@ -32,20 +32,20 @@ Each icon is available in solid and outlined variants (`Heroicon::Star` vs. `Her
 
 ## Resources
 
-### [Singular resources](../docs/4.x/resources/singular)
+### Singular resources
 
 [Singular resources](../docs/4.x/resources/singular) are ideal when you don't need a full table of records—just a single form for managing one item. If the record doesn't exist, it's created when the form is first submitted. If it does, it's loaded automatically on page load and updated when submitted.
 This approach works well for pages like a `Homepage` editor, `Settings` screen, or a user `Profile.`
 
-### [Nested resources](../docs/4.x/resources/nesting)
+### Nested resources
 
 [Relation managers]() and [relation pages]() make it easy to display and manage related records within a resource.
 For example, in a `CourseResource`, you might use a relation manager or page to manage the lessons that belong to a course. This lets you create and edit lessons directly from a table using modals.
 But if lessons are more complex, modals might not be enough. In that case, you can give lessons their own resource with full-page create and edit views — this is called a [nested resource](../docs/4.x/resources/nesting).
 
-### [Code quality tips](../docs/4.x/resources/code-quality-tips)
+### Code quality tips
 
-To keep your Filament code clean and maintainable:
+To keep your Filament code [clean and maintainable](../docs/4.x/resources/code-quality-tips):
 
 - Use [schema and table classes](../docs/4.x/resources/code-quality-tips#using-schema-and-table-classes) to separate large `form()` and `table()` definitions into their own files. This helps avoid bloated methods and improves readability.
 - Create [dedicated component classes](../docs/4.x/resources/code-quality-tips#using-component-classes) when individual form inputs, table columns, filters, or actions become complex. This keeps each piece of logic focused and reusable.
@@ -80,7 +80,7 @@ Previously, only the icon could be customized. Now, the entire tab component is 
 
 ## Navigation
 
-### [Sidebar / Topbar](../docs/4.x/navigation/overview#reloading-the-sidebar-and-topbar)
+### Sidebar / Topbar
 
 The `Sidebar` and `Topbar` are now Livewire components, allowing them to be updated dynamically.
 If you need to refresh them — for example, after a setting or permission change — you can dispatch a [`refresh-sidebar` or `refresh-topbar`](../docs/4.x/navigation/overview#reloading-the-sidebar-and-topbar) browser event to trigger a reload.
@@ -150,9 +150,8 @@ Each column can be customized:
 - `width()` defines a fixed width for the column.
 
 ### Selecting options from a table in a modal
-[ModalTableSelect](../docs/4.x/forms/select#selecting-options-from-a-table-in-a-modal)
 
-[...]
+The [ModalTableSelect](../docs/4.x/forms/select#selecting-options-from-a-table-in-a-modal) component lets users select records from a modal that displays a full [Filament table](../docs/4.x/tables/overview) — ideal for relationships with many records that need advanced [search](../docs/4.x/tables/columns/overview#searching) and [filtering](../docs/4.x/tables/filters/overview).
 
 ### Using JavaScript
 
@@ -179,51 +178,65 @@ This approach skips the network request entirely and updates fields instantly on
 
 In this JavaScript context, you can use `$state`, `$get()`, and `$set()` to interact with field states efficiently.
 
-### Fusing fields together into a group
-[FusedGroup](../docs/4.x/forms/overview#fusing-fields-together-into-a-group)
+### Fusing fields into a group
 
-[...]
+The [FusedGroup](../docs/4.x/forms/overview#fusing-fields-together-into-a-group) component lets you visually combine multiple fields into a single, compact group.
+It's best used with compatible field types like [text inputs](../docs/4.x/forms/text-input), [selects](../docs/4.x/forms/select), [date-time pickers](../docs/4.x/forms/date-time-picker) and [color pickers](../docs/4.x/forms/color-picker).
 
-### Extra content in fields
+### Adding Extra Content to a Field
 
-[Adding extra content to a field](../docs/4.x/forms/overview#adding-extra-content-to-a-field)
+Fields contain [multiple slots](../docs/4.x/forms/overview#adding-extra-content-to-a-field) where content can be inserted in a child schema. Slots can accept text, [any schema components](../docs/4.x/schemas/overview), [actions](../docs/4.x/actions/overview), or [action groups](../docs/4.x/actions/grouping-actions) — typically with [prime components](../docs/4.x/schemas/primes).
 
-[...]
+Available slots include:
+- `aboveLabel()`, `beforeLabel()`, `afterLabel()`, `belowLabel()`
+- `aboveContent()`, `beforeContent()`, `afterContent()`, `belowContent()`
+- `aboveErrorMessage()`, `belowErrorMessage()`
 
 ### Partial rendering
 
-[Partial rendering](../docs/4.x/forms/overview#field-partial-rendering)
+By default, using [live()](../docs/4.x/forms/overview#the-basics-of-reactivity) on a field re-renders the entire schema when its value changes.
 
-[...]
+Filament now offers [more efficient options](../docs/4.x/forms/overview#field-partial-rendering):
+- `partiallyRenderComponentsAfterStateUpdated()` re-renders only specified fields after state updates.
+- `partiallyRenderAfterStateUpdated()` re-renders just the field itself.
+- `skipRenderAfterStateUpdated()`: prevents any re-rendering, useful when handling logic only.
+
+These tools help optimize field interactions, especially when only part of the form needs to react to changes.
 
 ## Infolists
 
 ### Code entry
 
-[Code entry](../docs/4.x/infolists/code-entry)
-
-[...]
+[Code entry](../docs/4.x/infolists/code-entry) allows you to present a highlighted code snippet in your [infolist](../docs/4.x/infolists).
+It uses [Phiki](https://github.com/phikiphp/phiki) for code highlighting on the server.
 
 ## Tables
 
-### Static data
+### Tables with Static Data
 
-### Reordable Columns
+[Filament tables](../docs/4.x/tables) are typically backed by [Eloquent models](), but that's not always ideal.
+When your data isn't stored in a database — or you want to render external or computed data — you can now use [static data](../docs/4.x/tables/static-data) as the data source.
+
+To use [static data](../docs/4.x/tables/static-data), pass an `array` to the `records()` method. This lets you render simple datasets without a database, while still supporting features like [columns](../docs/4.x/tables/static-data#columns), [sorting](../docs/4.x/tables/static-data#sorting), [searching](../docs/4.x/tables/static-data#searching), [pagination](../docs/4.x/tables/static-data#pagination), and [actions](../docs/4.x/tables/static-data#actions).
+
+You can also [fetch data from external APIs](../docs/4.x/tables/static-data#using-an-external-api-as-a-table-data-source). For example, use Laravel's HTTP client to pull data from a REST API and return it as an `array` in `records()`.
+This is useful for integrating third-party services or remote backends.
+
+> When working with APIs, make sure to implement proper authentication, error handling, and rate limiting.
 
 ### Toolbar actions
 
-Tables now support a dedicated **toolbar actions** area.
+Tables now support a dedicated [toolbar actions](../docs/4.x/tables/actions#toolbar-actions) area.
 
 You can place both regular actions and [bulk actions](../docs/4.x/tables/actions#bulk-actions) in the [`toolbarActions()`](../docs/4.x/tables/actions#toolbar-actions) method.
 
 This is useful for actions like "create", which are not tied to a specific row, or for making bulk actions more visible and accessible in the table’s toolbar.
 
-
 ## Actions
 
 ### Unified actions
 
-Actions are now fully unified across tables, forms, infolists and regular actions.
+[Actions](../docs/4.x/actions/overview) are now fully unified across tables, forms, infolists and regular actions.
 
 Instead of having separate `Action` classes for each context, all actions now use a single `Filament\Actions` namespace.
 
@@ -237,14 +250,6 @@ Bulk actions now support the `chunkSelectedRecords()` method, allowing selected 
 
 Charts can now be made collapsible by setting the `$isCollapsible` property to `true` on the widget class.
 
-## Notifications
-
-### Error notifications
-
-[Error Notifications](../docs/4.x/panel-configuration#configuring-error-notifications)
-
-[...]
-
 ## Panel Configuration
 
 ### Sub-navigation position
@@ -256,12 +261,25 @@ Available options are:
 - `End` – renders at the bottom
 - `Top` – displays as tabs
 
-### Strict Authorization Mode
+### Strict authorization mode
 
 By default, Filament allows access to a resource if no policy or policy method exists — assuming authorization isn't required.
 
 To enforce stricter security, you can enable strict authorization mode using [`strictAuthorization()`](../docs/4.x/panel-configuration#strict-authorization-mode).
 This will throw an exception if a policy or method is missing, ensuring all access is explicitly defined.
+
+### Customizing error notifications
+
+You can now customize how [error messages appear](../docs/4.x/panel-configuration#configuring-error-notifications) in your Filament panel.
+
+When Laravel's debug mode is off, Filament replaces Livewire's full-screen error modals with flash notifications.
+You can:
+- Disable this behavior globally using `errorNotifications(false)`.
+- Customize the default error message with `registerErrorNotification(title, body)`.
+- Set custom messages for specific HTTP status codes using the `statusCode` parameter.
+- Enable or disable error notifications on a per-page basis via the `$hasErrorNotifications` property.
+
+This gives you full control over the user experience when something goes wrong.
 
 ## Extras
 
